@@ -1,0 +1,13 @@
+{
+  "name": "ai-landing-zone",
+  "description": "env0 template for the AI landing zone Terraform deployment.",
+  "type": "terraform",
+  "workingDirectory": "terraform",
+  "terraformVersion": "1.9.0",
+  "parameters": {
+    "resource_group_name": "ai-lz-rg-01",
+    "resource_group_location": "swedencentral",
+    "deployment_name": "ai-landing-zone",
+    "enable_telemetry": true
+  }
+}
