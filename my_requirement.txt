@@ -1,0 +1,14 @@
+I need clear terraform scripts from this repo to me marked and identified. I also want to have a little addition into this configuration. 
+1. I want the azure firewall out of picture, and I want the hub in the hub-and-spoke configuration to have Paloalto firewall VM in place, and Aviatrix router controller in place. These should be fetched from azure market place. I want the ingress and egress for the entire zone, to happen through this hub and spoke structure only. The actual foundry related resource should be in the spoke
+2. I want the creation of identities, spokes and networking, routing tables, private endpoints, and private DNS all to be inside the hub 
+3. I want to have the setup where we have the terraform templates, that would actually be used by env0 to deploy infrastructure for us. 
+4. Harness.io would be used to build the application from the github actions repo and pushed to container registry, from there it would be created as a container and hosted with the newly provisioned landing zone for application
+5. The terraform scripts would have their own deployment. They go through Harness.io for validation, then they go to env0 for validation, pickup templates and go for deployment. So, they will have to be appropriately be developed in this repo.
+6. All the terraform scripts should be properly commented out.
+7. There should be a Microsoft SIEM that should be setup and the application should be linked to it. 
+8. Different types of groups i.e. application security group, network security groups, user groups, identity groups, management groups etc. should be setup using scripts. But all of them should not be fixed. The terraform scripts should be properly provisioning for the same. Make some assumptions, properly create comments and point them out.
+9. Make all terraform scripts as modular as possible, with very clear demarcation on what I need to put in where. I also need proper documentation .md files for the same. 
+10. The IP tables should also be properly marked and setup through the terraform scripts only, and it should be clearly commented and called out
+11. You are free to make assumptions, but call them out cleary. 
+12. Create managed identities only, no system assigned automatic identities allowed. Each identity should be assigned policies based on env0 templates. So, appropriate env0 templates will also have to be designed and generated. 
+13. Workflows should be very clearly defined and the appropriate terraform plan generated should be very clear.

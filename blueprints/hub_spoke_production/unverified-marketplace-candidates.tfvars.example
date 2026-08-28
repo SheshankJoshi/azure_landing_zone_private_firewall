@@ -1,0 +1,25 @@
+# These are unverified research candidates, not supported deployment values.
+# Availability, exact plan names, licensing, regional support, and image versions
+# must be checked in each target subscription. Deployment remains disabled.
+
+deployment_enabled          = false
+blueprint_approved          = false
+marketplace_values_verified = false
+byol_terms_accepted         = false
+
+marketplace_images = {
+  palo_alto = {
+    publisher = "paloaltonetworks"
+    offer     = "vmseries-flex"
+    plan      = "byol"
+    sku       = "byol"
+    version   = "latest"
+  }
+  aviatrix = {
+    publisher = "aviatrix-systems"
+    offer     = "aviatrix-cloud-services"
+    plan      = "aviatrix-enterprise-byol"
+    sku       = "aviatrix-enterprise-byol"
+    version   = "latest"
+  }
+}

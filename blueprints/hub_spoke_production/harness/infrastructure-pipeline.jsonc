@@ -1,0 +1,118 @@
+{
+  "pipeline": {
+    "name": "hub-spoke-blueprint-validation",
+    "identifier": "hub_spoke_blueprint_validation",
+    "projectIdentifier": "ai_landing_zone",
+    "orgIdentifier": "default",
+    "description": "Validates Terraform and promotes an approved env0 deployment. It never applies Terraform directly.",
+    "stages": [
+      {
+        "stage": {
+          "name": "Validate",
+          "identifier": "validate",
+          "type": "CI",
+          "spec": {
+            "execution": {
+              "steps": [
+                {
+                  "step": {
+                    "name": "terraform-init",
+                    "identifier": "terraform_init",
+                    "type": "Run",
+                    "spec": {
+                      "command": "terraform -chdir=blueprints/hub_spoke_production init -backend=false -input=false"
+                    }
+                  }
+                },
+                {
+                  "step": {
+                    "name": "terraform-fmt",
+                    "identifier": "terraform_fmt",
+                    "type": "Run",
+                    "spec": {
+                      "command": "terraform -chdir=blueprints/hub_spoke_production fmt -check -recursive"
+                    }
+                  }
+                },
+                {
+                  "step": {
+                    "name": "terraform-validate",
+                    "identifier": "terraform_validate",
+                    "type": "Run",
+                    "spec": {
+                      "command": "terraform -chdir=blueprints/hub_spoke_production validate"
+                    }
+                  }
+                },
+                {
+                  "step": {
+                    "name": "terraform-unit-tests",
+                    "identifier": "terraform_unit_tests",
+                    "type": "Run",
+                    "spec": {
+                      "command": "terraform -chdir=blueprints/hub_spoke_production test -test-directory=tests/unit"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "stage": {
+          "name": "Approve env0 promotion",
+          "identifier": "approve_env0_promotion",
+          "type": "Approval",
+          "spec": {
+            "execution": {
+              "steps": [
+                {
+                  "step": {
+                    "name": "Architecture and Marketplace approval",
+                    "identifier": "architecture_marketplace_approval",
+                    "type": "HarnessApproval",
+                    "spec": {
+                      "approvalMessage": "Confirm pinned Marketplace values, BYOL terms, routing symmetry, policy scope, and env0 plan evidence."
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "stage": {
+          "name": "Request env0 deployment",
+          "identifier": "request_env0_deployment",
+          "type": "Custom",
+          "spec": {
+            "execution": {
+              "steps": [
+                {
+                  "step": {
+                    "name": "env0-deploy",
+                    "identifier": "env0_deploy",
+                    "type": "Http",
+                    "spec": {
+                      "method": "POST",
+                      "url": "<+secrets.getValue(\"env0-deployment-webhook\")>",
+                      "headers": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "requestBody": "{\"template\":\"hub-spoke-production-blueprint\",\"revision\":\"<+codebase.commitSha>\"}"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  }
+}

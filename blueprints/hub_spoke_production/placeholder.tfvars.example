@@ -1,0 +1,22 @@
+deployment_enabled          = false
+blueprint_approved          = false
+marketplace_values_verified = false
+byol_terms_accepted         = false
+
+# Replace every placeholder below only after Marketplace and licensing review.
+marketplace_images = {
+  palo_alto = {
+    publisher = "REPLACE_WITH_VERIFIED_PUBLISHER"
+    offer     = "REPLACE_WITH_VERIFIED_OFFER"
+    plan      = "REPLACE_WITH_VERIFIED_BYOL_PLAN"
+    sku       = "REPLACE_WITH_VERIFIED_SKU"
+    version   = "REPLACE_WITH_PINNED_VERSION"
+  }
+  aviatrix = {
+    publisher = "REPLACE_WITH_VERIFIED_PUBLISHER"
+    offer     = "REPLACE_WITH_VERIFIED_OFFER"
+    plan      = "REPLACE_WITH_VERIFIED_PLAN"
+    sku       = "REPLACE_WITH_VERIFIED_SKU"
+    version   = "REPLACE_WITH_PINNED_VERSION"
+  }
+}

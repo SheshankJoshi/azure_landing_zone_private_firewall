@@ -1,0 +1,97 @@
+{
+  "pipeline": {
+    "name": "landing-zone-application-delivery",
+    "identifier": "landing_zone_application_delivery",
+    "projectIdentifier": "ai_landing_zone",
+    "orgIdentifier": "default",
+    "description": "Separate application pipeline for build, test, scan, sign, ACR push, and Container Apps revision promotion.",
+    "stages": [
+      {
+        "stage": {
+          "name": "Build and verify",
+          "identifier": "build_verify",
+          "type": "CI",
+          "spec": {
+            "execution": {
+              "steps": [
+                {
+                  "step": {
+                    "name": "application-tests",
+                    "identifier": "application_tests",
+                    "type": "Run",
+                    "spec": {
+                      "command": "REPLACE_WITH_APPLICATION_TEST_COMMAND"
+                    }
+                  }
+                },
+                {
+                  "step": {
+                    "name": "build-container",
+                    "identifier": "build_container",
+                    "type": "Run",
+                    "spec": {
+                      "command": "REPLACE_WITH_HARNESS_CONTAINER_BUILD_STEP"
+                    }
+                  }
+                },
+                {
+                  "step": {
+                    "name": "scan-and-sign",
+                    "identifier": "scan_and_sign",
+                    "type": "Run",
+                    "spec": {
+                      "command": "REPLACE_WITH_APPROVED_SCAN_AND_SIGN_COMMAND"
+                    }
+                  }
+                },
+                {
+                  "step": {
+                    "name": "push-to-acr",
+                    "identifier": "push_to_acr",
+                    "type": "Run",
+                    "spec": {
+                      "command": "REPLACE_WITH_PRIVATE_ACR_PUSH_STEP"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "stage": {
+          "name": "Promote Container Apps revision",
+          "identifier": "promote_container_apps_revision",
+          "type": "Deployment",
+          "spec": {
+            "execution": {
+              "steps": [
+                {
+                  "step": {
+                    "name": "promote-revision",
+                    "identifier": "promote_revision",
+                    "type": "Run",
+                    "spec": {
+                      "command": "REPLACE_WITH_CONTAINER_APPS_REVISION_PROMOTION"
+                    }
+                  }
+                },
+                {
+                  "step": {
+                    "name": "verify-and-rollback",
+                    "identifier": "verify_and_rollback",
+                    "type": "Run",
+                    "spec": {
+                      "command": "REPLACE_WITH_HEALTH_VERIFICATION_AND_ROLLBACK"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  }
+}

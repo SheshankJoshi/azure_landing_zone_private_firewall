@@ -1,0 +1,27 @@
+{
+  "name": "hub-spoke-production-blueprint",
+  "description": "Disabled-by-default env0 template for the isolated Palo Alto, Aviatrix, and Foundry blueprint.",
+  "type": "terraform",
+  "workingDirectory": "blueprints/hub_spoke_production",
+  "terraformVersion": "1.15.8",
+  "parameters": {
+    "deployment_enabled": false,
+    "blueprint_approved": false,
+    "marketplace_values_verified": false,
+    "byol_terms_accepted": false,
+    "move_subscriptions_to_management_group": false
+  },
+  "deploymentPolicy": {
+    "applyAuthority": "env0",
+    "requiresApproval": true,
+    "preventDestroy": true,
+    "driftDetection": true
+  },
+  "requiredVariableSets": [
+    "azure-oidc-connectivity",
+    "azure-oidc-identity-management",
+    "azure-oidc-workload",
+    "marketplace-verified-values",
+    "landing-zone-governance"
+  ]
+}

@@ -54,6 +54,7 @@ nav:
       - "Parameterization": bicep/parameterization.md
       - "Building Accelerators (Submodule Pattern)": bicep/accelerator-pattern.md
   - Terraform Implementation: terraform/index.md
+  - Terraform Deployment Sequence: terraform/deployment-sequence.md
   - Terraform parity: terraform-parity.md
   - Portal installation: portal/index.md  
 
